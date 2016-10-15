@@ -41,18 +41,19 @@ app.get("/puppies",function(req,res){
     res.redirect("/puppies/new");
 });
 
-// app.post("/puppies", function(req,res){
-//     console.log("name " + req.body.name);
-//     console.log("age " + req.body.age);
-//     var addName = req.body.name;
-//     var addAge = req.body.age;
-//     let currentObject = puppies[puppies.length] = {};
-//     currentObject.name = addName;
-//     currentObject.age = addAge;
-//     currentObject.id = puppies.length;
-//     console.log(puppies);
-//     res.redirect("/puppies/new");
-// });
+app.post("/puppies", function(req,res){
+    console.log("name " + req.body.name);
+    console.log("age " + req.body.age);
+    var addName = req.body.name;
+    var addAge = req.body.age;
+    puppies.push({});
+    var currentObject = puppies[puppies.length - 1];
+    currentObject.name = addName;
+    currentObject.age = addAge;
+    currentObject.id = puppies.length;
+    console.log(puppies);
+    res.redirect("/puppies/new");
+});
 
 app.get("/puppies/:id",function(req, res){
     var dogsID = req.params.id;
