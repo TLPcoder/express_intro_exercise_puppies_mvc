@@ -9,6 +9,7 @@ const Puppy = require("./models/puppy").Puppy;
 const addPuppy = require("./models/puppy").addToArray;
 const allPuppies = require("./models/puppy").returnAllPuppies;
 const routes = require("./routes/routers");
+var puppies = require("./models/puppy").puppies;
 
 // var trevor = new Puppy("trevor","35");
 // var brandon = new Puppy("brandon", 8);
@@ -24,16 +25,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-//var puppies = [];
-
 app.get("/", function(req, res) {
-    // console.log("has property", allPuppies().hasOwnProperty());
-    // console.log(allPuppies())
-    // if (allPuppies().hasOwnProperty()) {
-    //     res.send(allPuppies());
-    // } else {
-        res.send(allPuppies());
-    //}
+    res.send(allPuppies());
 });
 
 app.get("/puppies/new", function(req, res) {
@@ -57,12 +50,15 @@ app.post("/puppies", function(req, res) {
 
 app.get("/puppies/:id", function(req, res) {
     var dogsID = req.params.id;
-    if (dogsID) {
-        for (let key in allPuppies()) {
-            if (Number(dogsID) === allPuppies()[key].id) {
-                res.send(allPuppies()[key]);
-            }
-        }
+    var findPuppy = allPuppies();
+    if (findPuppy.length > 0) {
+        res.send(findPuppy[dogsID - 1]);
+        // for (let key in allPuppies()) {
+        //     if (Number(dogsID) === allPuppies()[key].id) {
+        //         res.send(allPuppies()[key]);
+        //     }
+        // }
+      }else{
         res.sendStatus(400);
     }
 });
@@ -78,6 +74,23 @@ app.listen(PORT, function() {
 
 module.exports = {
     app,
-    //puppies
+    puppies,
     allPuppies
 };
+
+// function decodeMorse(morseCode){
+//   //your code here
+//   var splitString = morseCode.split(" ");
+//   var myString = "";
+//   var alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+//   var morseTable = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."];
+//   for(let i = 0; i < splitString.length; i++){
+//     let morseIndex = morseTable.indexOf(splitString[i]);
+//     let letter = alpha[morseIndex];
+//     if(letter === undefined){
+//      letter = " ";
+//     }
+//     myString += letter;
+//     }
+//    return myString.replace("  "," ");
+//  }
